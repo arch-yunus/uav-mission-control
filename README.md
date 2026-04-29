@@ -1,97 +1,80 @@
-# 🦅 UAV Mission Control: ARGUS Tactical Interface
+![ARGUS Mission Control Banner](assets/mission_control_banner.png)
 
-> **"He who controls the sky, controls the destiny of the ground."**
+# 🦅 ARGUS Mission Control: Tactical Command HUD `v2.5-Omega`
 
-Welcome to the **ARGUS UAV Mission Control System**—a high-performance, next-generation tactical interface designed for decentralized swarm management, electronic warfare (EW) resilience, and real-time mission synchronization. This repository serves as the operational headquarters for advanced aerial autonomy.
+[![Operational](https://img.shields.io/badge/Status-Operational-success?style=for-the-badge&logo=checkpoint)](https://github.com/arch-yunus/uav-mission-control)
+[![HUD Type](https://img.shields.io/badge/Interface-Tactical--Glassmorphic-blue?style=for-the-badge&logo=react)](https://github.com/arch-yunus/uav-mission-control)
+[![EW Ready](https://img.shields.io/badge/EW-Omega--Tier-red?style=for-the-badge&logo=wireshark)](https://github.com/arch-yunus/uav-mission-control)
 
----
+> **"Visibility is the first step of dominance. Synchronization is the second."**
 
-## 🛰️ Strategic Vision
-
-The **ARGUS Protocol** is built upon the principles of *Siber-Asabiyet*—the fusion of technical dominance with spiritual discipline. It is not merely a control software; it is a strategic asset designed to operate in contested environments where GNSS-denied navigation and cognitive electronic warfare are the norms.
-
-### 💎 Core Philosophy
-1.  **Low-Latency Autonomy**: Real-time decision-making at the edge.
-2.  **Electronic Resilience**: Integrated Aegis-AI modules for jamming detection.
-3.  **Visual Excellence**: A glassmorphic HUD designed for high-stress operational clarity.
-4.  **Swarm Intelligence**: Unified control for multi-UAV configurations.
+Welcome to the **ARGUS Tactical Hub**—the ultimate command and control interface for high-performance UAV operations. Designed for low-latency telemetry visualization, multi-swarm orchestration, and real-time electronic warfare monitoring.
 
 ---
 
-## 🛠️ Technical Architecture
+## 🛰️ The HUD Philosophy: *Siber-Asabiyet*
 
-| Module | Description | Tech Stack |
+The ARGUS HUD is not just a dashboard; it is a cognitive extension of the mission commander. Built with **Advanced Glassmorphism** and **Real-Time Simulation Engines**, it provides a distraction-free, high-fidelity environment for executing complex aerial maneuvers in hostile territories.
+
+### 💎 Core Tactical Features
+
+| Feature | Description | Tactical Edge |
 | :--- | :--- | :--- |
-| **Tactical Dashboard** | Real-time telemetry and HUD visualization. | React + Vite + CSS3 |
-| **Telemetry Engine** | High-frequency data stream processing. | Node.js / Zig Core |
-| **EW Shield** | Cognitive Electronic Warfare monitoring. | Python (ML) / C++ |
-| **Mission Planner** | Dynamic waypoint and trajectory optimization. | Mapbox / Leaflet |
+| **Omni-Telemetry** | Precision Altitude, Velocity, and Heading. | Total Spatial Awareness |
+| **Radar Overlay** | Dynamic scanlines and proximity detection. | Threat Mitigation |
+| **EW Shield Monitor** | Real-time jamming and spoofing alerts. | Electronic Resilience |
+| **Emergency Protocols** | One-tap Kill Switch and RTH sequences. | Asset Safety |
 
 ---
 
-## 🚀 Key Features
+## 🛠️ Integrated Tech Stack
 
-### 1. **Next-Gen Telemetry HUD**
-- **Altitude/Velocity/Heading**: Precision flight data.
-- **Signal Health**: Real-time monitoring of Uplink/Downlink integrity.
-- **Battery Management**: Intelligent RTH (Return to Home) calculation.
+```mermaid
+graph LR
+    subgraph "Frontend Interface"
+        UI[React / Vanilla JS]
+        CSS[Glassmorphic CSS3]
+        GL[WebGL / Canvas]
+    end
 
-### 2. **Electronic Warfare (EW) Monitor**
-- **Spectrum Analysis**: Detection of local interference.
-- **Jamming Alerts**: Visual warnings for GNSS/Radio spoofing.
-- **Resilient Comms**: Adaptive frequency switching logs.
+    subgraph "Engine Core"
+        SIM[Tactical Engine v2.0]
+        DATA[MAVLink Streamer]
+        EW[EW Deception Logic]
+    end
 
-### 3. **Interactive Mission Planning**
-- **Waypoint Navigation**: Drag-and-drop tactical planning.
-- **Geofencing**: Dynamic operational boundaries.
-- **No-Fly Zone Integration**: Automatic safety checks.
+    UI --- SIM
+    SIM --- DATA
+    SIM --- EW
+```
 
 ---
 
-## 📂 Repository Structure
+## 📂 Command Structure
 
 ```bash
 uav-mission-control/
-├── src/                # Core Application Logic
-│   ├── components/     # UI Components (Map, Telemetry, EW)
-│   ├── engine/         # Simulation and Data Processing
-│   └── styles/         # Premium CSS Design System
-├── public/             # Assets and Icons
-├── docs/               # Technical Specifications & Manifestos
-└── README.md           # The Monumental Overview
+├── src/
+│   ├── engine/         # Tactical Engine Logic (app.js)
+│   ├── styles/         # Premium Design System (style.css)
+│   └── components/     # Specialized UI Modules
+├── public/             # Tactical Assets & Icons
+├── docs/               # Manifestos & technical Specs
+└── index.html          # The Command Gateway
 ```
 
 ---
 
-## 🛠️ Getting Started
+## 🚀 Deployment Instructions
 
-### Prerequisites
-- Node.js (v18+)
-- npm or yarn
-- Git
-
-### Installation
 ```bash
-git clone https://github.com/arch-yunus/uav-mission-control.git
+# Clone the tactical gateway
+git clone git@github.com:arch-yunus/uav-mission-control.git
+
+# Initialize the environment
 cd uav-mission-control
-npm install
-npm run dev
+python3 -m http.server 8000
 ```
-
----
-
-## 📅 Roadmap
-
-- [ ] **Phase 1**: Initial HUD & Telemetry Simulation (Current)
-- [ ] **Phase 2**: Multi-UAV Swarm Synchronization
-- [ ] **Phase 3**: Integration with Aegis-AI EW Modules
-- [ ] **Phase 4**: Full ROS2/Gazebo Simulation Support
-
----
-
-## 📜 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 

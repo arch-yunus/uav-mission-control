@@ -3,121 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARGUS | UAV Mission Control</title>
-    <meta name="description" content="Next-generation tactical UAV mission control interface.">
+    <title>ARGUS | Tactical Command HUD</title>
+    <meta name="description" content="Sovereign UAV Mission Control Interface.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="src/styles/style.css">
 </head>
 <body>
+    <!-- Visual Overlays -->
+    <div class="vignette"></div>
+    <div class="scanlines"></div>
+
     <div class="dashboard">
-        <!-- Header -->
+        <!-- Header: Strategic HUD -->
         <header class="panel header" id="header-main">
             <div class="logo">
-                <span class="pulse">🦅</span> ARGUS TACTICAL
+                <span class="pulse">🦅</span> ARGUS <span>OMEGA</span>
             </div>
+            
+            <div class="mission-status-hud">
+                <div class="hud-item">
+                    <div class="hud-label">MISSION CLOCK</div>
+                    <div class="hud-value" id="current-time">00:00:00</div>
+                </div>
+                <div class="hud-item">
+                    <div class="hud-label">COORDINATES</div>
+                    <div class="hud-value" style="font-size: 12px;">39.92°N / 32.85°E</div>
+                </div>
+            </div>
+
             <div class="system-status">
                 <div class="status-item">
-                    <div class="status-indicator" id="gnss-status"></div>
-                    <span>GNSS: SECURE</span>
+                    <div class="status-indicator" id="gnss-status" style="background: var(--accent-glow); box-shadow: 0 0 10px var(--accent-glow);"></div>
+                    <span>SECURE LINK</span>
                 </div>
                 <div class="status-item">
-                    <div class="status-indicator" id="comm-status"></div>
-                    <span>COMMS: ACTIVE</span>
-                </div>
-                <div class="status-item">
-                    <span id="current-time">00:00:00</span>
+                    <div class="status-indicator" id="comm-status" style="background: var(--secondary-glow); box-shadow: 0 0 10px var(--secondary-glow);"></div>
+                    <span>AES-256 ACTIVE</span>
                 </div>
             </div>
         </header>
 
-        <!-- Left Panel: Telemetry -->
-        <aside class="panel telemetry-panel" id="telemetry-panel">
-            <h2>Live Telemetry</h2>
+        <!-- Left: Primary Telemetry -->
+        <aside class="panel telemetry-panel">
+            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 20px;">// CRITICAL TELEMETRY</h2>
             <div class="data-grid">
                 <div class="data-card">
-                    <div class="data-label">ALTITUDE</div>
-                    <div class="data-value" id="val-alt">452.4</div>
-                    <span class="data-unit">M MSL</span>
+                    <div class="data-label">ALTITUDE (MSL)</div>
+                    <div class="data-value"><span id="val-alt">450.0</span><small>M</small></div>
                 </div>
                 <div class="data-card">
-                    <div class="data-label">VELOCITY</div>
-                    <div class="data-value" id="val-vel">18.2</div>
-                    <span class="data-unit">M/S</span>
+                    <div class="data-label">GROUND SPEED</div>
+                    <div class="data-value"><span id="val-vel">66.5</span><small>KM/H</small></div>
                 </div>
                 <div class="data-card">
-                    <div class="data-label">BATTERY</div>
-                    <div class="data-value" id="val-batt">84</div>
-                    <span class="data-unit">%</span>
+                    <div class="data-label">BATTERY CAPACITY</div>
+                    <div class="data-value"><span id="val-batt">88</span><small>%</small></div>
                 </div>
                 <div class="data-card">
-                    <div class="data-label">SIGNAL STRENGTH</div>
-                    <div class="data-value" id="val-rssi">-64</div>
-                    <span class="data-unit">DBM</span>
+                    <div class="data-label">SIGNAL INTEGRITY</div>
+                    <div class="data-value"><span id="val-rssi">-62</span><small>DBM</small></div>
                 </div>
-                <div class="data-card">
+                <div class="data-card" style="border-left-color: var(--secondary-glow);">
                     <div class="data-label">PITCH / ROLL</div>
-                    <div class="data-value" id="val-attitude">2.4° / -1.2°</div>
+                    <div class="hud-value" id="val-attitude" style="font-size: 18px; font-weight: 800;">0.0° / 0.0°</div>
                 </div>
             </div>
         </aside>
 
-        <!-- Center: Tactical Map -->
+        <!-- Center: Tactical Theater -->
         <main class="panel map-view" id="map-canvas">
             <div class="radar-sweep"></div>
-            <div class="radar-circle" style="width: 200px; height: 200px;"></div>
-            <div class="radar-circle" style="width: 400px; height: 400px;"></div>
-            <div class="radar-circle" style="width: 600px; height: 600px;"></div>
+            
+            <!-- Crosshair UI -->
+            <div class="crosshair-h" style="position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: rgba(0, 242, 255, 0.1);"></div>
+            <div class="crosshair-v" style="position: absolute; top: 0; left: 50%; width: 1px; height: 100%; background: rgba(0, 242, 255, 0.1);"></div>
             
             <!-- Mock UAV Icon -->
-            <div id="uav-icon" style="position: absolute; transform: translate(-50%, -50%); transition: all 0.5s linear;">
-                <svg width="40" height="40" viewBox="0 0 40 40">
-                    <path d="M20 5 L35 30 L20 25 L5 30 Z" fill="var(--accent-primary)" stroke="white" stroke-width="2"/>
+            <div id="uav-icon" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: all 0.2s ease;">
+                <svg width="60" height="60" viewBox="0 0 60 60">
+                    <path d="M30 10 L50 50 L30 42 L10 50 Z" fill="none" stroke="var(--accent-glow)" stroke-width="2"/>
+                    <circle cx="30" cy="30" r="4" fill="var(--accent-glow)"/>
                 </svg>
             </div>
-            
-            <div style="position: absolute; bottom: 20px; left: 20px; font-size: 10px; color: var(--text-secondary);">
-                COORDINATES: 39.9208° N, 32.8541° E
+
+            <div style="position: absolute; top: 20px; left: 20px; font-family: var(--font-mono); font-size: 10px; color: var(--accent-glow);">
+                SCANNING SECTOR 07-ALPHA...
             </div>
         </main>
 
-        <!-- Right Panel: EW & Logs -->
-        <aside class="panel ew-panel" id="ew-panel">
-            <h2>Electronic Warfare</h2>
+        <!-- Right: EW Shield & Logs -->
+        <aside class="panel ew-panel">
+            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 20px;">// EW SPECTRUM ANALYZER</h2>
+            
             <div class="ew-indicator">
-                <span style="font-size: 10px; width: 80px;">JAMMING</span>
-                <div class="bar-container">
-                    <div class="bar-fill" id="bar-jamming" style="width: 12%;"></div>
+                <span style="font-size: 10px; width: 100px; color: var(--text-body);">JAMMING LVL</span>
+                <div class="bar-container" style="height: 4px; background: rgba(255,255,255,0.05); flex: 1;">
+                    <div class="bar-fill" id="bar-jamming" style="height: 100%; background: var(--danger-glow); width: 12%;"></div>
                 </div>
             </div>
-            <div class="ew-indicator">
-                <span style="font-size: 10px; width: 80px;">SPOOFING</span>
-                <div class="bar-container">
-                    <div class="bar-fill" id="bar-spoofing" style="width: 5%;"></div>
-                </div>
-            </div>
-            <div class="ew-indicator">
-                <span style="font-size: 10px; width: 80px;">NOISE</span>
-                <div class="bar-container">
-                    <div class="bar-fill" id="bar-noise" style="width: 28%; background: var(--accent-secondary);"></div>
+            
+            <div class="ew-indicator" style="margin-top: 15px;">
+                <span style="font-size: 10px; width: 100px; color: var(--text-body);">SPOOFING PROB</span>
+                <div class="bar-container" style="height: 4px; background: rgba(255,255,255,0.05); flex: 1;">
+                    <div class="bar-fill" id="bar-spoofing" style="height: 100%; background: var(--secondary-glow); width: 5%;"></div>
                 </div>
             </div>
 
-            <h2 style="margin-top: 30px;">Tactical Logs</h2>
-            <div id="logs" style="font-size: 11px; font-family: monospace; color: var(--text-secondary); height: 150px; overflow-y: auto;">
-                <div>[10:22:15] SYSTEM INITIALIZED</div>
-                <div>[10:22:18] LINK ESTABLISHED</div>
-                <div>[10:22:20] HEARTBEAT OK</div>
+            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-top: 40px; margin-bottom: 10px;">// TACTICAL EVENT LOG</h2>
+            <div id="logs" style="font-size: 11px; font-family: var(--font-mono); color: var(--text-body); height: 200px; overflow-y: auto;">
+                <div>INITIATING ARGUS CORE...</div>
             </div>
         </aside>
 
-        <!-- Bottom Panel: Controls -->
-        <footer class="panel control-panel" id="control-panel">
-            <button class="btn" id="btn-takeoff">Takeoff</button>
-            <button class="btn" id="btn-land">Land</button>
+        <!-- Bottom: Control Matrix -->
+        <footer class="panel control-panel" style="display: flex; gap: 20px; align-items: center;">
+            <button class="btn" id="btn-takeoff">Initiate Takeoff</button>
+            <button class="btn" id="btn-land">Autonomous Land</button>
             <button class="btn" id="btn-rth">Return Home</button>
-            <button class="btn btn-danger" id="btn-kill">Kill Switch</button>
+            <button class="btn btn-danger" id="btn-kill">Kill Protocol</button>
         </footer>
     </div>
 
