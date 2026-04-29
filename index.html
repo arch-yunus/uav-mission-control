@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARGUS | UAV Mission Control</title>
+    <meta name="description" content="Next-generation tactical UAV mission control interface.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Header -->
+        <header class="panel header" id="header-main">
+            <div class="logo">
+                <span class="pulse">🦅</span> ARGUS TACTICAL
+            </div>
+            <div class="system-status">
+                <div class="status-item">
+                    <div class="status-indicator" id="gnss-status"></div>
+                    <span>GNSS: SECURE</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-indicator" id="comm-status"></div>
+                    <span>COMMS: ACTIVE</span>
+                </div>
+                <div class="status-item">
+                    <span id="current-time">00:00:00</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Left Panel: Telemetry -->
+        <aside class="panel telemetry-panel" id="telemetry-panel">
+            <h2>Live Telemetry</h2>
+            <div class="data-grid">
+                <div class="data-card">
+                    <div class="data-label">ALTITUDE</div>
+                    <div class="data-value" id="val-alt">452.4</div>
+                    <span class="data-unit">M MSL</span>
+                </div>
+                <div class="data-card">
+                    <div class="data-label">VELOCITY</div>
+                    <div class="data-value" id="val-vel">18.2</div>
+                    <span class="data-unit">M/S</span>
+                </div>
+                <div class="data-card">
+                    <div class="data-label">BATTERY</div>
+                    <div class="data-value" id="val-batt">84</div>
+                    <span class="data-unit">%</span>
+                </div>
+                <div class="data-card">
+                    <div class="data-label">SIGNAL STRENGTH</div>
+                    <div class="data-value" id="val-rssi">-64</div>
+                    <span class="data-unit">DBM</span>
+                </div>
+                <div class="data-card">
+                    <div class="data-label">PITCH / ROLL</div>
+                    <div class="data-value" id="val-attitude">2.4° / -1.2°</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Center: Tactical Map -->
+        <main class="panel map-view" id="map-canvas">
+            <div class="radar-sweep"></div>
+            <div class="radar-circle" style="width: 200px; height: 200px;"></div>
+            <div class="radar-circle" style="width: 400px; height: 400px;"></div>
+            <div class="radar-circle" style="width: 600px; height: 600px;"></div>
+            
+            <!-- Mock UAV Icon -->
+            <div id="uav-icon" style="position: absolute; transform: translate(-50%, -50%); transition: all 0.5s linear;">
+                <svg width="40" height="40" viewBox="0 0 40 40">
+                    <path d="M20 5 L35 30 L20 25 L5 30 Z" fill="var(--accent-primary)" stroke="white" stroke-width="2"/>
+                </svg>
+            </div>
+            
+            <div style="position: absolute; bottom: 20px; left: 20px; font-size: 10px; color: var(--text-secondary);">
+                COORDINATES: 39.9208° N, 32.8541° E
+            </div>
+        </main>
+
+        <!-- Right Panel: EW & Logs -->
+        <aside class="panel ew-panel" id="ew-panel">
+            <h2>Electronic Warfare</h2>
+            <div class="ew-indicator">
+                <span style="font-size: 10px; width: 80px;">JAMMING</span>
+                <div class="bar-container">
+                    <div class="bar-fill" id="bar-jamming" style="width: 12%;"></div>
+                </div>
+            </div>
+            <div class="ew-indicator">
+                <span style="font-size: 10px; width: 80px;">SPOOFING</span>
+                <div class="bar-container">
+                    <div class="bar-fill" id="bar-spoofing" style="width: 5%;"></div>
+                </div>
+            </div>
+            <div class="ew-indicator">
+                <span style="font-size: 10px; width: 80px;">NOISE</span>
+                <div class="bar-container">
+                    <div class="bar-fill" id="bar-noise" style="width: 28%; background: var(--accent-secondary);"></div>
+                </div>
+            </div>
+
+            <h2 style="margin-top: 30px;">Tactical Logs</h2>
+            <div id="logs" style="font-size: 11px; font-family: monospace; color: var(--text-secondary); height: 150px; overflow-y: auto;">
+                <div>[10:22:15] SYSTEM INITIALIZED</div>
+                <div>[10:22:18] LINK ESTABLISHED</div>
+                <div>[10:22:20] HEARTBEAT OK</div>
+            </div>
+        </aside>
+
+        <!-- Bottom Panel: Controls -->
+        <footer class="panel control-panel" id="control-panel">
+            <button class="btn" id="btn-takeoff">Takeoff</button>
+            <button class="btn" id="btn-land">Land</button>
+            <button class="btn" id="btn-rth">Return Home</button>
+            <button class="btn btn-danger" id="btn-kill">Kill Switch</button>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
