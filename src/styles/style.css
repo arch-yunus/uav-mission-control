@@ -1,15 +1,14 @@
 :root {
-    --bg-dark: #010204;
-    --panel-bg: hsla(210, 40%, 4%, 0.85);
-    --accent-glow: hsla(185, 100%, 50%, 1);
-    --accent-muted: hsla(185, 100%, 50%, 0.15);
-    --secondary-glow: hsla(38, 100%, 50%, 1);
-    --danger-glow: hsla(0, 100%, 60%, 1);
-    --text-head: #f8fafc;
-    --text-body: #64748b;
-    --border-line: hsla(185, 100%, 50%, 0.1);
-    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-    --font-sans: 'Inter', system-ui, sans-serif;
+    --bg-deep: #05070a;
+    --panel-bg: rgba(10, 15, 25, 0.7);
+    --accent-glow: #00f2ff;
+    --secondary-glow: #7000ff;
+    --text-head: #e0faff;
+    --text-body: #a0c0c5;
+    --font-main: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --glass-border: 1px solid rgba(0, 242, 255, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
 }
 
 * {
@@ -19,241 +18,304 @@
 }
 
 body {
-    background-color: var(--bg-dark);
+    background: var(--bg-deep);
     color: var(--text-body);
-    font-family: var(--font-sans);
+    font-family: var(--font-main);
     height: 100vh;
-    width: 100vw;
     overflow: hidden;
-    perspective: 1500px; /* Essential for 3D Cockpit Effect */
-    background-image: 
-        radial-gradient(circle at 50% 50%, hsla(185, 100%, 50%, 0.05) 0%, transparent 80%),
-        linear-gradient(90deg, var(--border-line) 1px, transparent 1px),
-        linear-gradient(var(--border-line) 1px, transparent 1px);
-    background-size: 100% 100%, 40px 40px, 40px 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1500px;
 }
 
-/* Scanline Overlay */
+/* Taktik Katmanlar */
 .scanlines {
     position: fixed;
     inset: 0;
     background: linear-gradient(
         to bottom,
-        rgba(18, 16, 16, 0) 50%,
-        rgba(0, 0, 0, 0.1) 50%
+        transparent 50%,
+        rgba(0, 242, 255, 0.02) 50%
     );
     background-size: 100% 4px;
-    z-index: 1000;
+    z-index: 100;
     pointer-events: none;
-    opacity: 0.3;
+}
+
+.vignette {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.8) 100%);
+    z-index: 99;
+    pointer-events: none;
 }
 
 .dashboard {
+    width: 95vw;
+    height: 90vh;
     display: grid;
-    grid-template-columns: 400px 1fr 400px;
-    grid-template-rows: 80px 1fr 180px;
-    gap: 20px;
-    padding: 30px;
-    height: 100vh;
+    grid-template-columns: 320px 1fr 320px;
+    grid-template-rows: 80px 1fr 80px;
+    gap: 15px;
     transform-style: preserve-3d;
-}
-
-/* 3D Cockpit Panels */
-.telemetry-panel {
-    transform: rotateY(15deg) translateZ(50px);
-    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
-}
-
-.ew-panel {
-    transform: rotateY(-15deg) translateZ(50px);
-    box-shadow: -20px 0 50px rgba(0, 0, 0, 0.5);
-}
-
-.map-view {
-    transform: translateZ(0);
+    transition: transform 0.2s cubic-bezier(0.1, 0.9, 0.2, 1);
 }
 
 .panel {
     background: var(--panel-bg);
-    backdrop-filter: blur(30px);
-    border: 1px solid var(--border-line);
-    border-radius: 8px;
-    padding: 24px;
+    backdrop-filter: blur(12px);
+    border: var(--glass-border);
+    border-radius: 4px;
+    box-shadow: var(--glass-shadow);
+    padding: 20px;
     position: relative;
     overflow: hidden;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.panel:hover {
-    border-color: var(--accent-glow);
-    box-shadow: 0 0 30px var(--accent-muted);
-}
-
-/* Corner Accents */
-.panel::before, .panel::after {
+.panel::before {
     content: '';
     position: absolute;
-    width: 15px;
-    height: 15px;
-    border-color: var(--accent-glow);
-    border-style: solid;
-    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
 }
 
-.panel::before { top: 10px; left: 10px; border-width: 2px 0 0 2px; }
-.panel::after { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; }
-
-/* Header Styling */
+/* Header */
 .header {
-    grid-column: 1 / -1;
+    grid-column: 1 / 4;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 40px;
-    background: linear-gradient(to right, transparent, var(--panel-bg), transparent);
 }
 
 .logo {
     font-family: var(--font-mono);
-    font-weight: 900;
-    letter-spacing: 5px;
-    font-size: 24px;
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--text-head);
+    letter-spacing: 2px;
+}
+
+.logo span {
+    color: var(--accent-glow);
+    font-weight: 400;
+    font-size: 14px;
+}
+
+/* Telemetry & Swarm */
+.telemetry-panel {
+    grid-row: 2 / 3;
+}
+
+.swarm-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.swarm-item {
+    background: rgba(255,255,255,0.03);
+    padding: 12px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-left: 3px solid transparent;
+}
+
+.swarm-item:hover {
+    background: rgba(0, 242, 255, 0.05);
+}
+
+.swarm-item.active {
+    background: rgba(0, 242, 255, 0.1);
+    border-left-color: var(--accent-glow);
     color: var(--text-head);
 }
 
-.logo span { color: var(--accent-glow); }
-
-/* Artificial Horizon (Gyro) */
-.gyro-container {
-    width: 120px;
-    height: 120px;
-    border: 2px solid var(--accent-glow);
-    border-radius: 50%;
-    margin: 20px auto;
-    position: relative;
-    overflow: hidden;
-    background: rgba(0,0,0,0.4);
-}
-
-.gyro-inner {
-    position: absolute;
-    width: 100%;
-    height: 200%;
-    top: -50%;
-    transition: transform 0.1s linear;
-}
-
-.gyro-sky { height: 50%; background: var(--accent-muted); }
-.gyro-ground { height: 50%; background: rgba(255,255,255,0.05); }
-.gyro-line {
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    height: 2px;
-    background: var(--accent-glow);
-    box-shadow: 0 0 10px var(--accent-glow);
-}
-
-/* Spectrum Analyzer */
-#spectrum-canvas {
-    width: 100%;
-    height: 80px;
-    background: rgba(0,0,0,0.3);
-    border-radius: 4px;
-    margin-top: 10px;
-}
-
-/* Data Cards */
 .data-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 20px;
 }
 
 .data-card {
-    background: rgba(255, 255, 255, 0.03);
-    padding: 12px 20px;
-    border-left: 3px solid var(--accent-glow);
-    transition: all 0.3s ease;
-}
-
-.data-card:hover {
-    background: var(--accent-muted);
-    transform: translateX(10px);
+    background: rgba(0, 242, 255, 0.02);
+    padding: 15px;
+    border-left: 2px solid var(--accent-glow);
 }
 
 .data-label {
     font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
     color: var(--accent-glow);
+    margin-bottom: 5px;
+    font-family: var(--font-mono);
 }
 
 .data-value {
     font-size: 24px;
-    font-family: var(--font-mono);
-    font-weight: 800;
+    font-weight: 900;
     color: var(--text-head);
+    font-family: var(--font-mono);
 }
 
-/* Map Overlays */
+/* Gyro / Artificial Horizon */
+.gyro-container {
+    width: 100%;
+    height: 120px;
+    background: #111;
+    border-radius: 50%;
+    margin: 20px 0;
+    overflow: hidden;
+    position: relative;
+    border: 2px solid rgba(255,255,255,0.1);
+}
+
+.gyro-inner {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transition: transform 0.1s linear;
+}
+
+.gyro-sky {
+    height: 50%;
+    background: #004d66;
+}
+
+.gyro-ground {
+    height: 50%;
+    background: #3d2b1f;
+}
+
+.gyro-line {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    width: 80%;
+    height: 2px;
+    background: var(--accent-glow);
+    z-index: 5;
+}
+
+/* Map View */
 .map-view {
-    background: radial-gradient(circle at center, rgba(0, 242, 255, 0.05), transparent);
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    background: radial-gradient(circle, #0a1118 0%, #05070a 100%);
+    position: relative;
 }
 
 .radar-sweep {
     position: absolute;
-    inset: -50%;
-    background: conic-gradient(from 0deg, transparent, rgba(0, 242, 255, 0.1), transparent);
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, rgba(0, 242, 255, 0.1) 0deg, transparent 90deg);
+    transform: translate(-50%, -50%);
     animation: sweep 4s linear infinite;
+    pointer-events: none;
 }
 
 @keyframes sweep {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* Control Buttons */
+/* EW Panel */
+.ew-panel {
+    grid-row: 2 / 3;
+}
+
+#spectrum-canvas {
+    width: 100%;
+    height: 100px;
+    background: rgba(0,0,0,0.3);
+}
+
+/* Controls */
 .control-panel {
-    grid-column: 1 / -1;
+    grid-column: 1 / 4;
     display: flex;
     justify-content: center;
-    gap: 30px;
-    background: linear-gradient(to top, var(--panel-bg), transparent);
+    align-items: center;
+    gap: 20px;
 }
 
 .btn {
-    background: transparent;
+    padding: 10px 25px;
+    background: rgba(0, 242, 255, 0.05);
     border: 1px solid var(--accent-glow);
     color: var(--accent-glow);
-    padding: 12px 30px;
     font-family: var(--font-mono);
     font-size: 12px;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.3s;
-    clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
 }
 
 .btn:hover {
     background: var(--accent-glow);
-    color: var(--bg-dark);
-    box-shadow: 0 0 20px var(--accent-muted);
+    color: var(--bg-deep);
+    box-shadow: 0 0 20px var(--accent-glow);
 }
 
 .btn-danger {
-    border-color: var(--danger-glow);
-    color: var(--danger-glow);
+    border-color: #ff0055;
+    color: #ff0055;
 }
 
 .btn-danger:hover {
-    background: var(--danger-glow);
+    background: #ff0055;
+    color: white;
+    box-shadow: 0 0 20px #ff0055;
 }
 
 /* Animations */
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+.pulse {
+    animation: pulse 2s infinite;
 }
 
-.pulse { animation: pulse 2s infinite; }
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* Targets */
+.target-marker {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ff0055;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease-out;
+}
+
+.target-marker::before, .target-marker::after {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border: 1px solid rgba(255, 0, 85, 0.3);
+}
+
+.target-label {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    font-size: 10px;
+    color: #ff0055;
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    background: rgba(0,0,0,0.8);
+    padding: 2px 5px;
+}

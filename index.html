@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARGUS | Tactical Command HUD</title>
+    <title>ARGUS | Taktik Komuta HUD</title>
     <meta name="description" content="Sovereign UAV Mission Control Interface.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,43 +11,62 @@
     <link rel="stylesheet" href="src/styles/style.css">
 </head>
 <body>
+    <!-- Görsel Katmanlar -->
+    <div class="vignette"></div>
     <div class="scanlines"></div>
 
-    <div class="dashboard">
-        <!-- Header: Strategic HUD -->
+    <div class="dashboard" id="main-dashboard">
+        <!-- Üst Panel: Stratejik Bilgiler -->
         <header class="panel header">
             <div class="logo">
-                <span class="pulse">🦅</span> ARGUS <span>OMEGA</span>
+                <span class="pulse">🦅</span> ARGUS <span>SOVEREIGN</span>
             </div>
             
             <div class="mission-status-hud" style="display: flex; gap: 40px; font-family: var(--font-mono); font-size: 12px;">
                 <div class="hud-item">
-                    <div style="color: var(--accent-glow); margin-bottom: 4px;">MISSION CLOCK</div>
+                    <div style="color: var(--accent-glow); margin-bottom: 4px;">GÖREV SAATİ</div>
                     <div id="current-time" style="color: var(--text-head); font-weight: 800;">00:00:00</div>
                 </div>
                 <div class="hud-item">
-                    <div style="color: var(--accent-glow); margin-bottom: 4px;">TARGET SECTOR</div>
+                    <div style="color: var(--accent-glow); margin-bottom: 4px;">HEDEF SEKTÖR</div>
                     <div style="color: var(--text-head); font-weight: 800;">39.9°N / 32.8°E</div>
+                </div>
+                <div class="hud-item">
+                    <div style="color: var(--accent-glow); margin-bottom: 4px;">AKTİF ÜNİTE</div>
+                    <div id="active-unit-id" style="color: var(--secondary-glow); font-weight: 800;">ARGUS-01</div>
                 </div>
             </div>
 
             <div class="system-status" style="display: flex; gap: 20px;">
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <div class="pulse" style="width: 8px; height: 8px; background: var(--accent-glow); border-radius: 50%;"></div>
-                    <span style="font-size: 10px; color: var(--accent-glow);">SECURE LINK</span>
+                    <span style="font-size: 10px; color: var(--accent-glow);">GÜVENLİ LİNK</span>
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <div class="pulse" style="width: 8px; height: 8px; background: var(--secondary-glow); border-radius: 50%;"></div>
-                    <span style="font-size: 10px; color: var(--secondary-glow);">AES-256</span>
+                    <span style="font-size: 10px; color: var(--secondary-glow);">AES-256 AKTİF</span>
                 </div>
             </div>
         </header>
 
-        <!-- Left: Primary Telemetry -->
+        <!-- Sol Panel: Telemetri ve Sürü Yönetimi -->
         <aside class="panel telemetry-panel">
-            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 20px; color: var(--accent-glow);">// CORE_TELEMETRY</h2>
+            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 20px; color: var(--accent-glow);">// SÜRÜ_YÖNETİMİ</h2>
             
-            <!-- Artificial Horizon -->
+            <div class="swarm-list" id="swarm-list" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px;">
+                <div class="swarm-item active" data-unit="ARGUS-01">
+                    <span class="unit-status" style="color: var(--accent-glow)">●</span> ARGUS-01 <small style="margin-left: auto;">LİDER</small>
+                </div>
+                <div class="swarm-item" data-unit="ARGUS-02">
+                    <span class="unit-status" style="color: var(--text-body)">●</span> ARGUS-02 <small style="margin-left: auto;">TAKİPÇİ</small>
+                </div>
+                <div class="swarm-item" data-unit="ARGUS-03">
+                    <span class="unit-status" style="color: var(--text-body)">●</span> ARGUS-03 <small style="margin-left: auto;">TAKİPÇİ</small>
+                </div>
+            </div>
+
+            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 20px; color: var(--accent-glow);">// KRİTİK_TELEMETRİ</h2>
+            
             <div class="gyro-container">
                 <div class="gyro-inner" id="gyro-inner">
                     <div class="gyro-sky"></div>
@@ -58,53 +77,50 @@
 
             <div class="data-grid">
                 <div class="data-card">
-                    <div class="data-label">Altitude (MSL)</div>
+                    <div class="data-label">İRTİFA (MSL)</div>
                     <div class="data-value"><span id="val-alt">450.0</span><small style="font-size: 12px; margin-left: 5px;">M</small></div>
                 </div>
                 <div class="data-card">
-                    <div class="data-label">Ground Speed</div>
-                    <div class="data-value"><span id="val-vel">66.5</span><small style="font-size: 12px; margin-left: 5px;">KM/H</small></div>
+                    <div class="data-label">YER HIZI</div>
+                    <div class="data-value"><span id="val-vel">66.5</span><small style="font-size: 12px; margin-left: 5px;">KM/S</small></div>
                 </div>
                 <div class="data-card">
-                    <div class="data-label">Battery Level</div>
+                    <div class="data-label">BATARYA DURUMU</div>
                     <div class="data-value"><span id="val-batt">88</span><small style="font-size: 12px; margin-left: 5px;">%</small></div>
                 </div>
             </div>
         </aside>
 
-        <!-- Center: Tactical Theater -->
+        <!-- Orta Panel: Taktik Harekat Alanı -->
         <main class="panel map-view" id="map-canvas">
             <div class="radar-sweep"></div>
             
-            <!-- Crosshair UI -->
             <div style="position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: rgba(0, 242, 255, 0.1);"></div>
             <div style="position: absolute; top: 0; left: 50%; width: 1px; height: 100%; background: rgba(0, 242, 255, 0.1);"></div>
             
-            <!-- UAV Icon -->
-            <div id="uav-icon" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <div id="uav-icon" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: all 0.2s ease;">
                 <svg width="40" height="40" viewBox="0 0 40 40">
                     <path d="M20 5 L35 35 L20 28 L5 35 Z" fill="none" stroke="var(--accent-glow)" stroke-width="2"/>
                     <circle cx="20" cy="22" r="3" fill="var(--accent-glow)"/>
                 </svg>
             </div>
 
-            <!-- Target simulation will be added via JS -->
             <div id="targets-layer" style="position: absolute; inset: 0;"></div>
 
             <div style="position: absolute; top: 20px; left: 20px; font-family: var(--font-mono); font-size: 10px; color: var(--accent-glow);">
-                SCANNING SECTOR 07-ALPHA...
+                SEKTÖR 07-ALPHA TARANIYOR...
             </div>
         </main>
 
-        <!-- Right: EW Shield & Logs -->
+        <!-- Sağ Panel: EH Spektrum ve Kayıtlar -->
         <aside class="panel ew-panel">
-            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 20px; color: var(--accent-glow);">// EW_SPECTRUM</h2>
+            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 20px; color: var(--accent-glow);">// EH_SPEKTRUM_ANALİZİ</h2>
             
             <canvas id="spectrum-canvas"></canvas>
 
             <div style="margin-top: 30px;">
                 <div style="display: flex; justify-content: space-between; font-size: 10px; margin-bottom: 5px;">
-                    <span>SIGNAL INTEGRITY</span>
+                    <span>SİNYAL BÜTÜNLÜĞÜ</span>
                     <span id="val-rssi">-62 DBM</span>
                 </div>
                 <div style="height: 4px; background: rgba(255,255,255,0.05);">
@@ -112,18 +128,18 @@
                 </div>
             </div>
 
-            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-top: 40px; margin-bottom: 10px; color: var(--accent-glow);">// TACTICAL_LOG</h2>
+            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-top: 40px; margin-bottom: 10px; color: var(--accent-glow);">// TAKTİK_GÜNLÜK</h2>
             <div id="logs" style="font-size: 10px; font-family: var(--font-mono); color: var(--text-body); height: 180px; overflow-y: auto;">
-                <div>[INIT] LOADING CORE_OS...</div>
+                <div>[SİSTEM] ÇEKİRDEK_OS YÜKLENİYOR...</div>
             </div>
         </aside>
 
-        <!-- Bottom: Control Matrix -->
+        <!-- Alt Panel: Kontrol Matrisi -->
         <footer class="panel control-panel">
-            <button class="btn" id="btn-takeoff">Initiate Takeoff</button>
-            <button class="btn" id="btn-land">Auto Land</button>
-            <button class="btn" id="btn-rth">Return Home</button>
-            <button class="btn btn-danger" id="btn-kill">Kill Protocol</button>
+            <button class="btn" id="btn-takeoff">Kalkış Başlat</button>
+            <button class="btn" id="btn-land">Otonom İniş</button>
+            <button class="btn" id="btn-rth">Eve Dönüş</button>
+            <button class="btn btn-danger" id="btn-kill">Protokolü Kes</button>
         </footer>
     </div>
 
