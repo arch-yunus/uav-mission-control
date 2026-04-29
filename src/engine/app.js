@@ -1,11 +1,11 @@
 /**
- * SUNGUR Tactical Engine v3.0 - SUNGUR
- * Ultra-performance HUD orchestration with voice synthesis and real-time spectrum analysis.
+ * SUNGUR Pilotluk Eğitim Simülatörü - v3.0-Eğitim
+ * Temel uçuş dinamikleri ve arıza simülasyon motoru.
  */
 
-class SungurTacticalEngine {
+class ArgusTacticalEngine {
     constructor() {
-        this.activeUnit = 'SUNGUR-01';
+        this.activeUnit = 'SUNGUR-E1';
         this.telemetry = {
             alt: 450, vel: 18.5, batt: 88, rssi: -62,
             pitch: 0, roll: 0, yaw: 0,
@@ -13,9 +13,9 @@ class SungurTacticalEngine {
         };
 
         this.targets = [
-            { id: 'ALPHA-01', x: 25, y: 35, type: 'hostile', speed: 0.2 },
-            { id: 'BRAVO-07', x: 75, y: 65, type: 'friendly', speed: 0.1 },
-            { id: 'UNKNOWN', x: 45, y: 15, type: 'unknown', speed: 0.4 }
+            { id: 'EĞİTİM-HEDEF-1', x: 25, y: 35, type: 'friendly', speed: 0.2 },
+            { id: 'EĞİTİM-HEDEF-2', x: 75, y: 65, type: 'friendly', speed: 0.1 },
+            { id: 'SANAL-ENGEL', x: 45, y: 15, type: 'unknown', speed: 0.4 }
         ];
 
         this.init();
@@ -29,18 +29,18 @@ class SungurTacticalEngine {
         
         // Hoşgeldin mesajı
         setTimeout(() => {
-            this.voice("Sistem çevrimiçi. Sungur taktik çekirdek aktif. Egemenlik tesis ediliyor.");
-            this.log("SİSTEM_OS v3.0-SOVEREIGN AKTİF");
+            this.voice("Eğitim simülatörüne hoş geldiniz. Lütfen sanal uçuş kontrollerini hazırlayın.");
+            this.log("SİMÜLASYON_OS v3.0-EĞİTİM AKTİF");
         }, 1000);
     }
 
     setupEventListeners() {
         // Kontrol Butonları
         const actions = {
-            'btn-takeoff': "Kalkış sekansı başlatıldı. Çevre güvenliği doğrulanıyor.",
-            'btn-land': "Otonom iniş protokolü devreye girdi. İniş alanı taranıyor.",
-            'btn-rth': "Eve dönüş protokolü aktif. Üsse rota planlanıyor.",
-            'btn-kill': "ACİL DURUM KESİCİ DEVREDE. TÜM SİSTEMLER KAPATILIYOR!"
+            'btn-takeoff': "Ders 1: Sanal kalkış sekansı başlatıldı. Kontrol sizde.",
+            'btn-land': "Ders 2: Otonom iniş simülasyonu devrede. Pisti ortalayın.",
+            'btn-rth': "Eve dönüş (RTH) pratiği başladı. İrtifaya dikkat edin.",
+            'btn-kill': "EĞİTMEN MÜDAHALESİ: MOTOR ARIZASI SİMÜLE EDİLİYOR!"
         };
 
         Object.entries(actions).forEach(([id, msg]) => {
@@ -54,7 +54,7 @@ class SungurTacticalEngine {
             }
         });
 
-        // Sürü Yönetimi (Swarm Switch)
+        // Öğrenci/İHA Yönetimi (Swarm Switch)
         const swarmItems = document.querySelectorAll('.swarm-item');
         swarmItems.forEach(item => {
             item.addEventListener('click', () => {
@@ -90,8 +90,8 @@ class SungurTacticalEngine {
     switchUnit(id) {
         this.activeUnit = id;
         document.getElementById('active-unit-id').textContent = id;
-        this.log(`${id} ÜNİTESİNE BAĞLANILDI. SENKRONİZASYON TAMAMLANDI.`);
-        this.voice(`${id} ünitesine geçiş yapıldı.`);
+        this.log(`${id} DERS MODÜLÜ YÜKLENDİ.`);
+        this.voice(`${id} eğitim modülüne geçiş yapıldı.`);
         
         // Telemetriyi hafifçe sıfırla/değiştir (simülasyon için)
         this.telemetry.batt = 70 + Math.random() * 25;
@@ -107,7 +107,7 @@ class SungurTacticalEngine {
     }
 
     simulateData() {
-        // Yumuşak telemetri değişimi
+        // Yumuşak telemetri değişimi (Öğrenci pratiği için)
         this.telemetry.alt += (Math.random() - 0.45) * 0.5;
         this.telemetry.vel += (Math.random() - 0.5) * 0.05;
         this.telemetry.batt -= 0.0005;
@@ -155,7 +155,7 @@ class SungurTacticalEngine {
         // Hedefleri Çiz
         this.renderTargets();
 
-        // Saat
+        // Saat (Eğitim Süresi)
         const clock = document.getElementById('current-time');
         if (clock) clock.textContent = new Date().toLocaleTimeString();
     }
@@ -164,7 +164,6 @@ class SungurTacticalEngine {
         const layer = document.getElementById('targets-layer');
         if (!layer) return;
         
-        // Mevcut markerları yönet (performans için temizlik yerine güncelleme yapılabilir ama şimdilik basit tutalım)
         layer.innerHTML = '';
         this.targets.forEach(t => {
             const marker = document.createElement('div');
@@ -178,7 +177,7 @@ class SungurTacticalEngine {
             
             marker.style.borderColor = color;
             marker.innerHTML = `
-                <div class="target-label" style="color:${color}">${t.id} [${t.type.toUpperCase()}]</div>
+                <div class="target-label" style="color:${color}">${t.id}</div>
             `;
             layer.appendChild(marker);
         });
@@ -215,7 +214,7 @@ class SungurTacticalEngine {
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'tr-TR';
         utterance.rate = 1.0;
-        utterance.pitch = 0.8; // Hafif robotik/taktik ses tonu
+        utterance.pitch = 1.0; // Normal insan (Eğitmen) sesi tonu
         window.speechSynthesis.speak(utterance);
     }
 
@@ -236,8 +235,8 @@ class SungurTacticalEngine {
         document.body.style.animation = "shake 0.1s infinite";
         setTimeout(() => {
             document.body.style.filter = "invert(1) grayscale(1) contrast(2)";
-            this.voice("Kritik sistem hatası. Bağlantı kesildi. Egemenlik sona erdi.");
-            this.log("!!! KRİTİK HATA: SİSTEM ÇÖKTÜ !!!");
+            this.voice("Motor arızası simülasyonu başlatıldı. Lütfen acil iniş prosedürünü uygulayın.");
+            this.log("!!! ARIZA SİMÜLASYONU: MOTOR KAYBI !!!");
         }, 1500);
     }
 
@@ -247,7 +246,7 @@ class SungurTacticalEngine {
     }
 }
 
-// Shake animasyonu (CSS'e ek olarak buraya da inject edelim)
+// Shake animasyonu
 const styleInject = document.createElement('style');
 styleInject.textContent = `
     @keyframes shake {
@@ -262,5 +261,5 @@ styleInject.textContent = `
 document.head.appendChild(styleInject);
 
 document.addEventListener('DOMContentLoaded', () => {
-    window.engine = new SungurTacticalEngine();
+    window.engine = new ArgusTacticalEngine();
 });

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUNGUR | Taktik Komuta HUD</title>
-    <meta name="description" content="Sovereign UAV Mission Control Interface.">
+    <title>SUNGUR | Eğitim Simülatörü</title>
+    <meta name="description" content="UAV Pilot Training Simulator.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
@@ -19,53 +19,53 @@
         <!-- Üst Panel: Stratejik Bilgiler -->
         <header class="panel header">
             <div class="logo">
-                <span class="pulse">🦅</span> SUNGUR <span>SOVEREIGN</span>
+                <span class="pulse">🎓</span> SUNGUR <span>EĞİTİM SİMÜLATÖRÜ</span>
             </div>
             
             <div class="mission-status-hud" style="display: flex; gap: 40px; font-family: var(--font-mono); font-size: 12px;">
                 <div class="hud-item">
-                    <div style="color: var(--accent-glow); margin-bottom: 4px;">GÖREV SAATİ</div>
+                    <div style="color: var(--accent-glow); margin-bottom: 4px;">EĞİTİM SÜRESİ</div>
                     <div id="current-time" style="color: var(--text-head); font-weight: 800;">00:00:00</div>
                 </div>
                 <div class="hud-item">
-                    <div style="color: var(--accent-glow); margin-bottom: 4px;">HEDEF SEKTÖR</div>
-                    <div style="color: var(--text-head); font-weight: 800;">39.9°N / 32.8°E</div>
+                    <div style="color: var(--accent-glow); margin-bottom: 4px;">EĞİTİM SAHASI</div>
+                    <div style="color: var(--text-head); font-weight: 800;">SANAL SEKTÖR 01</div>
                 </div>
                 <div class="hud-item">
-                    <div style="color: var(--accent-glow); margin-bottom: 4px;">AKTİF ÜNİTE</div>
-                    <div id="active-unit-id" style="color: var(--secondary-glow); font-weight: 800;">SUNGUR-01</div>
+                    <div style="color: var(--accent-glow); margin-bottom: 4px;">ÖĞRENCİ ID</div>
+                    <div id="active-unit-id" style="color: var(--secondary-glow); font-weight: 800;">KURSİYER-01</div>
                 </div>
             </div>
 
             <div class="system-status" style="display: flex; gap: 20px;">
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <div class="pulse" style="width: 8px; height: 8px; background: var(--accent-glow); border-radius: 50%;"></div>
-                    <span style="font-size: 10px; color: var(--accent-glow);">GÜVENLİ LİNK</span>
+                    <span style="font-size: 10px; color: var(--accent-glow);">SİMÜLASYON AKTİF</span>
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <div class="pulse" style="width: 8px; height: 8px; background: var(--secondary-glow); border-radius: 50%;"></div>
-                    <span style="font-size: 10px; color: var(--secondary-glow);">AES-256 AKTİF</span>
+                    <span style="font-size: 10px; color: var(--secondary-glow);">EĞİTMEN MODU: KAPALI</span>
                 </div>
             </div>
         </header>
 
         <!-- Sol Panel: Telemetri ve Sürü Yönetimi -->
         <aside class="panel telemetry-panel">
-            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 20px; color: var(--accent-glow);">// SÜRÜ_YÖNETİMİ</h2>
+            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 20px; color: var(--accent-glow);">// ÖĞRENCİ_VE_İHA_SEÇİMİ</h2>
             
             <div class="swarm-list" id="swarm-list" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px;">
-                <div class="swarm-item active" data-unit="SUNGUR-01">
-                    <span class="unit-status" style="color: var(--accent-glow)">●</span> SUNGUR-01 <small style="margin-left: auto;">LİDER</small>
+                <div class="swarm-item active" data-unit="SUNGUR-E1">
+                    <span class="unit-status" style="color: var(--accent-glow)">●</span> İHA-1 <small style="margin-left: auto;">TEMEL UÇUŞ</small>
                 </div>
-                <div class="swarm-item" data-unit="SUNGUR-02">
-                    <span class="unit-status" style="color: var(--text-body)">●</span> SUNGUR-02 <small style="margin-left: auto;">TAKİPÇİ</small>
+                <div class="swarm-item" data-unit="SUNGUR-E2">
+                    <span class="unit-status" style="color: var(--text-body)">●</span> İHA-2 <small style="margin-left: auto;">ALETLİ UÇUŞ</small>
                 </div>
-                <div class="swarm-item" data-unit="SUNGUR-03">
-                    <span class="unit-status" style="color: var(--text-body)">●</span> SUNGUR-03 <small style="margin-left: auto;">TAKİPÇİ</small>
+                <div class="swarm-item" data-unit="SUNGUR-E3">
+                    <span class="unit-status" style="color: var(--text-body)">●</span> İHA-3 <small style="margin-left: auto;">SÜRÜ YÖNETİMİ</small>
                 </div>
             </div>
 
-            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 20px; color: var(--accent-glow);">// KRİTİK_TELEMETRİ</h2>
+            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 20px; color: var(--accent-glow);">// TEMEL_TELEMETRİ (ÖĞRENİM)</h2>
             
             <div class="gyro-container">
                 <div class="gyro-inner" id="gyro-inner">
@@ -77,15 +77,15 @@
 
             <div class="data-grid">
                 <div class="data-card">
-                    <div class="data-label">İRTİFA (MSL)</div>
+                    <div class="data-label">SANAL İRTİFA (MSL)</div>
                     <div class="data-value"><span id="val-alt">450.0</span><small style="font-size: 12px; margin-left: 5px;">M</small></div>
                 </div>
                 <div class="data-card">
-                    <div class="data-label">YER HIZI</div>
+                    <div class="data-label">SANAL HIZ</div>
                     <div class="data-value"><span id="val-vel">66.5</span><small style="font-size: 12px; margin-left: 5px;">KM/S</small></div>
                 </div>
                 <div class="data-card">
-                    <div class="data-label">BATARYA DURUMU</div>
+                    <div class="data-label">SİMÜLE BATARYA</div>
                     <div class="data-value"><span id="val-batt">88</span><small style="font-size: 12px; margin-left: 5px;">%</small></div>
                 </div>
             </div>
@@ -108,19 +108,19 @@
             <div id="targets-layer" style="position: absolute; inset: 0;"></div>
 
             <div style="position: absolute; top: 20px; left: 20px; font-family: var(--font-mono); font-size: 10px; color: var(--accent-glow);">
-                SEKTÖR 07-ALPHA TARANIYOR...
+                EĞİTİM SAHASI YÜKLENİYOR...
             </div>
         </main>
 
         <!-- Sağ Panel: EH Spektrum ve Kayıtlar -->
         <aside class="panel ew-panel">
-            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 20px; color: var(--accent-glow);">// EH_SPEKTRUM_ANALİZİ</h2>
+            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 20px; color: var(--accent-glow);">// GÜRÜLTÜ_SİMÜLASYONU</h2>
             
             <canvas id="spectrum-canvas"></canvas>
 
             <div style="margin-top: 30px;">
                 <div style="display: flex; justify-content: space-between; font-size: 10px; margin-bottom: 5px;">
-                    <span>SİNYAL BÜTÜNLÜĞÜ</span>
+                    <span>SANAL SİNYAL GÜCÜ (ÖĞRENİM İÇİN)</span>
                     <span id="val-rssi">-62 DBM</span>
                 </div>
                 <div style="height: 4px; background: rgba(255,255,255,0.05);">
@@ -128,18 +128,18 @@
                 </div>
             </div>
 
-            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-top: 40px; margin-bottom: 10px; color: var(--accent-glow);">// TAKTİK_GÜNLÜK</h2>
+            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-top: 40px; margin-bottom: 10px; color: var(--accent-glow);">// EĞİTMEN_LOGLARI</h2>
             <div id="logs" style="font-size: 10px; font-family: var(--font-mono); color: var(--text-body); height: 180px; overflow-y: auto;">
-                <div>[SİSTEM] ÇEKİRDEK_OS YÜKLENİYOR...</div>
+                <div>[EĞİTİM] SİMÜLATÖR MOTORU BAŞLATILDI...</div>
             </div>
         </aside>
 
         <!-- Alt Panel: Kontrol Matrisi -->
         <footer class="panel control-panel">
-            <button class="btn" id="btn-takeoff">Kalkış Başlat</button>
-            <button class="btn" id="btn-land">Otonom İniş</button>
-            <button class="btn" id="btn-rth">Eve Dönüş</button>
-            <button class="btn btn-danger" id="btn-kill">Protokolü Kes</button>
+            <button class="btn" id="btn-takeoff">Sanal Kalkış (Ders 1)</button>
+            <button class="btn" id="btn-land">Sanal İniş (Ders 2)</button>
+            <button class="btn" id="btn-rth">Eve Dönüş Pratiği</button>
+            <button class="btn btn-danger" id="btn-kill">Arıza Simülasyonu Başlat</button>
         </footer>
     </div>
 
