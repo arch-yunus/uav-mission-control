@@ -1,99 +1,84 @@
-![SUNGUR Eğitim Simülatörü Banner](assets/mission_control_banner.png)
+![SUNGUR Academy Banner](assets/mission_control_banner.png)
 
-# 🎓 SUNGUR Eğitim Simülatörü `v3.0-Akademi`
+# 🎓 SUNGUR İHA Pilotluk Eğitim Akademisi
 
-[![Eğitim Durumu](https://img.shields.io/badge/Durum-Simülasyon--Aktif-success?style=for-the-badge&logo=checkpoint)](https://github.com/arch-yunus/uav-mission-control)
-[![Arayüz](https://img.shields.io/badge/Arayüz-Eğitim--HUD-blue?style=for-the-badge&logo=react)](https://github.com/arch-yunus/uav-mission-control)
+[![Akademi](https://img.shields.io/badge/Akademi-Aktif-success?style=for-the-badge&logo=academiccap)](https://github.com/arch-yunus/uav-mission-control)
+[![Müfredat](https://img.shields.io/badge/Müfredat-Kapsamlı-blue?style=for-the-badge&logo=book)](https://github.com/arch-yunus/uav-mission-control)
 
-> **"Pratikte dökülen ter, sahada dökülecek kanı engeller."**
+> **"Gerçek bir pilot makineyi değil, olasılıkları yönetir."**
 
-**SUNGUR Eğitim Simülatörü**'ne hoş geldiniz. Bu arayüz, İHA pilot adaylarının saha operasyonlarına çıkmadan önce temel uçuş dinamiklerini, sürü yönetimini ve acil durum prosedürlerini (motor arızası, sinyal kaybı vb.) risksiz bir ortamda deneyimlemeleri için tasarlanmıştır.
+**SUNGUR İHA Pilotluk Eğitim Akademisi**'ne hoş geldiniz. Bu depo, SUNGUR İHA sistemleri için **resmi eğitim müfredatını, teorik materyalleri ve pratik simülasyon ortamını** barındıran temel eğitim karargahıdır. 
+
+Amacımız, sadece bir yazılım kullanıcısı değil, aerodinamik, meteoroloji ve kriz yönetimi konularına hakim, sahada her türlü duruma hazırlıklı profesyonel operatörler yetiştirmektir.
 
 ---
 
-## 🎯 Eğitim Odakları (Ders Modülleri)
+## 📚 Akademi Müfredatı (Syllabus)
 
-Sistem, öğrenme eğrisini kademeli olarak artıracak şekilde yapılandırılmıştır:
+Eğitim sürecimiz, teorik temellerin atılması ve ardından simülasyon ile kas hafızasının (reflekslerin) geliştirilmesi üzerine iki ana faza ayrılmıştır.
 
-| Modül | Teknik Odak | Simülasyon Çıktısı |
+### 🧠 1. Teorik Eğitim Fazı
+
+Sahaya çıkmadan önce bir pilotun bilmesi gereken temel mühendislik ve doğa kanunları:
+
+*   **[Aerodinamik ve İtki Sistemleri](docs/theory/aerodynamics.md):** Kaldırma kuvveti (Lift), sürüklenme (Drag), BLDC motor ve ESC tepkileri.
+*   **[İHA Hukuku ve Regülasyonlar](docs/regulations/law.md):** NOTAM okuma, sivil havacılık kuralları, uçuşa yasak bölgeler (NFZ) ve uçuş izin prosedürleri.
+*   **[Havacılık Meteorolojisi](docs/meteorology/weather.md):** Rüzgar gradyanı, termaller, K-İndeksi (Manyetik fırtınalar) ve yağışın RF sinyallerine etkisi.
+*   **[Batarya ve Enerji Yönetimi](docs/theory/power_systems.md):** Li-Po hücre kimyası, iç direnç, deşarj eğrileri (C-Rating) ve güvenli saklama koşulları.
+
+### 🎮 2. Pratik Simülasyon Fazı (SUNGUR Simulator)
+
+Teorik eğitimi tamamlayan kursiyerler, deponun kök dizininde bulunan interaktif web simülatörü üzerinden pratik eğitime geçerler.
+
+| Modül | Simülatör Dersi | Kazanım |
 | :--- | :--- | :--- |
-| **İHA-1: Temel Uçuş** | Sanal Kalkış ve İniş | Temel telemetri okuryazarlığı ve stabilizasyon. |
-| **İHA-2: Aletli Uçuş** | Görüş Mesafesi Dışı (BVLOS) | Sadece sanal ufuk (Gyro) ve radar ile uçuş pratiği. |
-| **İHA-3: Sürü Yönetimi** | Çoklu Ünite Senkronizasyonu | Lider-Takipçi protokollerinin idaresi. |
+| **MOD-01** | Temel Uçuş (VFR) | İrtifa, hız takibi ve manuel kalkış/iniş oryantasyonu. |
+| **MOD-02** | Aletli Uçuş (IFR) | Görüşsüz ortamda Yapay Ufuk (Horizon) ve radar ile uçuş. |
+| **MOD-03** | Kriz Yönetimi | Eğitmen tarafından tetiklenen motor arızası ve sinyal kaybı pratikleri. |
+| **MOD-04** | Çoklu İHA | SUNGUR-E1, E2, E3 ünitelerinin tek ekrandan sürü mantığıyla yönetimi. |
 
 ---
 
-## 🛠️ Simülasyon Çekirdeği (Engine)
+## 💻 Simülatörü Başlatma (Pratik Dersler İçin)
 
-Simülatörün kalbi, uçuş dinamiklerini ve acil durum senaryolarını eğitmene/öğrenciye sunan **Training Engine v3.0** motorudur.
+Pratik eğitim derslerine başlamak için SUNGUR Eğitim Simülatörü arayüzünü yerel makinenizde başlatmanız gerekmektedir:
 
-```mermaid
-graph TD
-    subgraph "Öğrenci Arayüzü (Student UI)"
-        UI[Eğitim Dashboard]
-        MAP[Sanal Sektör Radarı]
-        VOICE[Eğitmen Sesli Geri Bildirim]
-    end
+```bash
+# Akademi reposunu klonlayın
+git clone https://github.com/arch-yunus/uav-mission-control.git
+cd uav-mission-control
 
-    subgraph "Simülasyon Motoru (Training Engine)"
-        SIM[Telemetri Simülasyonu]
-        FAIL[Arıza Enjeksiyon Modülü]
-        LOG[Öğrenci Performans Logları]
-    end
-
-    UI <--> SIM
-    SIM <--> FAIL
+# Simülasyon arayüzünü başlatın (Python gerektirir)
+python3 -m http.server 8000
 ```
-
-### 🧠 Arıza Enjeksiyon Sistemi (Eğitmen Modu)
-Eğitmenler, öğrencinin reflekslerini ölçmek için sisteme anlık hatalar enjekte edebilir:
-- **Motor Arızası (Kill Switch)**: İrtifa kaybı simüle edilir, öğrenciden acil iniş prosedürleri (Süzülme/Otorotasyon) beklenir.
-- **Sinyal Gürültüsü**: Sinyal zayıflığı (RSSI düşüşü) simüle edilerek RTH (Eve Dönüş) karar mekanizması test edilir.
+Tarayıcınızdan `localhost:8000` adresine giderek **Simülatör Konsoluna** erişebilirsiniz.
 
 ---
 
-## ⚙️ Standart Eğitim Prosedürleri (SOP)
+## 📝 Değerlendirme ve Sertifikasyon
 
-Her kursiyer aşağıdaki aşamaları sırasıyla tamamlamak zorundadır:
-
-1.  **Ders 1 (Sanal Kalkış):** Telemetri verilerinin stabilizasyonunun teyidi ve kontrollü irtifa kazanımı.
-2.  **Ders 2 (Sanal İniş):** Rüzgar faktörlerinin simüle edildiği ortamda hedefe yumuşak iniş.
-3.  **Ders 3 (Eve Dönüş Pratiği):** Oryantasyon kaybı anında otonom dönüş sistemlerinin devralınması.
-4.  **Acil Durum (Arıza):** Eğitmen tarafından tetiklenen motor arızasına saniyeler içinde doğru tepkinin verilmesi.
+Kursiyerlerin "SUNGUR Operatörü" statüsü alabilmeleri için:
+1.  **Teorik Sınav:** Meteoroloji, Regülasyon ve Sistem mimarisi sorularından %85 başarı.
+2.  **Simülasyon Check-Ride:** Eğitmen eşliğinde yapılan 15 dakikalık simülasyon uçuşunda, enjekte edilen en az 2 arıza durumuna (örn. Link Kaybı) doğru SOP (Standart Operasyon Prosedürü) ile tepki vermek.
 
 ---
 
-## 📂 Dosya ve Klasör Yapısı
+## 📂 Akademi Dizin Yapısı
 
 ```text
 uav-mission-control/
-├── 📁 01_theory/          # Teorik eğitim notları ve checklistler
-├── 📁 02_simulation/      # Aktif uçuş senaryoları
-├── 📁 03_evaluation/      # Öğrenci performans raporları
-├── 📁 src/
-│   ├── ⚙️ engine/         # Simülasyon Çekirdeği (app.js)
-│   └── 🎨 styles/         # CSS Arayüz Tasarımı (style.css)
-└── 📄 index.html          # Eğitim Simülatörü Giriş Kapısı
+├── 📁 docs/
+│   ├── 📁 theory/         # Aerodinamik, sistem ve batarya teorileri
+│   ├── 📁 regulations/    # Havacılık hukuku ve NOTAM bilgileri
+│   └── 📁 meteorology/    # Rüzgar, manyetik fırtına ve hava durumu okumaları
+├── 📁 src/                # Simülatör kaynak kodları (app.js, style.css)
+└── 📄 index.html          # Web Tabanlı Eğitim Simülatörü (Pratik Faz)
 ```
 
 ---
 
-## 🚀 Hızlı Başlangıç
+## 🤝 Eğitime Katkıda Bulunma
 
-SUNGUR Eğitim Simülatörünü yerel makinenizde başlatmak için:
-
-```bash
-# Depoyu klonlayın
-git clone https://github.com/arch-yunus/uav-mission-control.git
-
-# Proje dizinine girin
-cd uav-mission-control
-
-# Yerel sunucuyu başlatın
-python3 -m http.server 8000
-```
-Tarayıcınızdan `localhost:8000` adresine giderek eğitime başlayabilirsiniz.
-
----
+Akademi müfredatı sürekli gelişmektedir. Teorik notlara katkıda bulunmak veya simülatöre yeni acil durum senaryoları eklemek için Pull Request gönderebilirsiniz.
 
 **arch-yunus tarafından ⚔️ ile geliştirilmiştir.**
