@@ -1,11 +1,11 @@
 /**
- * ARGUS Tactical Engine v3.0 - Sovereign
+ * SUNGUR Tactical Engine v3.0 - SUNGUR
  * Ultra-performance HUD orchestration with voice synthesis and real-time spectrum analysis.
  */
 
-class ArgusTacticalEngine {
+class SungurTacticalEngine {
     constructor() {
-        this.activeUnit = 'ARGUS-01';
+        this.activeUnit = 'SUNGUR-01';
         this.telemetry = {
             alt: 450, vel: 18.5, batt: 88, rssi: -62,
             pitch: 0, roll: 0, yaw: 0,
@@ -29,7 +29,7 @@ class ArgusTacticalEngine {
         
         // Hoşgeldin mesajı
         setTimeout(() => {
-            this.voice("Sistem çevrimiçi. Argus taktik çekirdek aktif. Egemenlik tesis ediliyor.");
+            this.voice("Sistem çevrimiçi. Sungur taktik çekirdek aktif. Egemenlik tesis ediliyor.");
             this.log("SİSTEM_OS v3.0-SOVEREIGN AKTİF");
         }, 1000);
     }
@@ -262,5 +262,5 @@ styleInject.textContent = `
 document.head.appendChild(styleInject);
 
 document.addEventListener('DOMContentLoaded', () => {
-    window.engine = new ArgusTacticalEngine();
+    window.engine = new SungurTacticalEngine();
 });

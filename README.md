@@ -1,6 +1,6 @@
-![ARGUS Mission Control Banner](assets/mission_control_banner.png)
+![SUNGUR Mission Control Banner](assets/mission_control_banner.png)
 
-# 🦅 ARGUS Misyon Kontrol: Taktik Komuta Merkezi `v3.0-Sovereign`
+# 🦅 SUNGUR Misyon Kontrol: Taktik Komuta Merkezi `v3.0-SUNGUR`
 
 [![Operasyonel](https://img.shields.io/badge/Durum-Operasyonel-success?style=for-the-badge&logo=checkpoint)](https://github.com/arch-yunus/uav-mission-control)
 [![Arayüz](https://img.shields.io/badge/Arayüz-Taktik--3D--HUD-blue?style=for-the-badge&logo=react)](https://github.com/arch-yunus/uav-mission-control)
@@ -8,13 +8,13 @@
 
 > **"Görmek hakimiyetin ilk adımı, senkronizasyon ise ikincisidir."**
 
-**ARGUS Taktik Merkezi**'ne hoş geldiniz—yüksek performanslı İHA operasyonları için nihai komuta ve kontrol arayüzü. Bu sistem, sadece veriyi görselleştirmekle kalmaz, karmaşık çoklu İHA ekosistemlerini tek bir "Sovereign" (Egemen) zekâ altında birleştirir.
+**SUNGUR Taktik Merkezi**'ne hoş geldiniz—yüksek performanslı İHA operasyonları için nihai komuta ve kontrol arayüzü. Bu sistem, sadece veriyi görselleştirmekle kalmaz, karmaşık çoklu İHA ekosistemlerini tek bir "SUNGUR" (Egemen) zekâ altında birleştirir.
 
 ---
 
 ## 🛰️ HUD Felsefesi: *Siber-Asabiyet*
 
-ARGUS HUD, bir gösterge panelinden öte, operatörün dijital sinir sistemi olarak kurgulanmıştır. **Glassmorphism** estetiği ve **3D Perspektif Katmanları** ile inşa edilen v3.0 arayüzü, siber dünyanın disiplini ile sahanın fiziksel gerçekliğini harmanlar.
+SUNGUR HUD, bir gösterge panelinden öte, operatörün dijital sinir sistemi olarak kurgulanmıştır. **Glassmorphism** estetiği ve **3D Perspektif Katmanları** ile inşa edilen v3.0 arayüzü, siber dünyanın disiplini ile sahanın fiziksel gerçekliğini harmanlar.
 
 ### 💎 v3.0-Sovereign Mimari Yenilikler
 
@@ -64,7 +64,7 @@ graph TD
 
 ## ⚙️ Standart Operasyon Prosedürleri (SOP)
 
-ARGUS ekosisteminde her operasyon, disiplin ve teknik doğruluğun birleşimi olan üç aşamalı bir protokolü takip eder:
+SUNGUR ekosisteminde her operasyon, disiplin ve teknik doğruluğun birleşimi olan üç aşamalı bir protokolü takip eder:
 
 ### 1. Stratejik Planlama (Pre-Flight)
 - **Çevre Analizi**: Manyetik alan bozulmaları, hava durumu ve uçuşa yasak bölgelerin (NFZ) güncelliği.
