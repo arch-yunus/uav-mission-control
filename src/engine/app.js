@@ -28,25 +28,45 @@ class ArgusTacticalEngine {
 
     init() {
         this.setupEventListeners();
+        this.initAudio();
         this.runCycle();
         this.updateClock();
         setInterval(() => this.updateClock(), 1000);
         this.log("SYSTEM CORE INITIALIZED - ARGUS v2.0");
+        this.playBeep(440, 0.1); // Startup beep
+    }
+
+    initAudio() {
+        this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    playBeep(freq, duration) {
+        if (!this.audioCtx) return;
+        const osc = this.audioCtx.createOscillator();
+        const gain = this.audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(this.audioCtx.destination);
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.1, this.audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, this.audioCtx.currentTime + duration);
+        osc.start();
+        osc.stop(this.audioCtx.currentTime + duration);
     }
 
     setupEventListeners() {
         const actions = {
-            'btn-takeoff': "TAKEOFF SEQUENCE INITIATED",
-            'btn-land': "LANDING PROTOCOL ACTIVE",
-            'btn-rth': "RTH (RETURN TO HOME) ENGAGED",
-            'btn-kill': "CRITICAL: EMERGENCY KILL SWITCH"
+            'btn-takeoff': { msg: "TAKEOFF SEQUENCE INITIATED", freq: 880 },
+            'btn-land': { msg: "LANDING PROTOCOL ACTIVE", freq: 660 },
+            'btn-rth': { msg: "RTH (RETURN TO HOME) ENGAGED", freq: 550 },
+            'btn-kill': { msg: "CRITICAL: EMERGENCY KILL SWITCH", freq: 220 }
         };
 
-        Object.entries(actions).forEach(([id, msg]) => {
+        Object.entries(actions).forEach(([id, data]) => {
             const el = document.getElementById(id);
             if (el) {
                 el.addEventListener('click', () => {
-                    this.log(msg);
+                    this.log(data.msg);
+                    this.playBeep(data.freq, 0.2);
                     if (id === 'btn-kill') this.triggerEmergency();
                 });
             }
@@ -55,13 +75,22 @@ class ArgusTacticalEngine {
 
     runCycle() {
         setInterval(() => {
-            // Precision Simulation
+            // Precision Simulation with noise
             this.telemetry.alt += (Math.random() - 0.48) * 0.5;
             this.telemetry.vel += (Math.random() - 0.5) * 0.2;
             this.telemetry.batt -= 0.005;
-            this.telemetry.pitch = Math.sin(Date.now() / 1000) * 5;
-            this.telemetry.roll = Math.cos(Date.now() / 1500) * 8;
+            this.telemetry.pitch = Math.sin(Date.now() / 1000) * 5 + (Math.random() * 0.5);
+            this.telemetry.roll = Math.cos(Date.now() / 1500) * 8 + (Math.random() * 0.5);
             this.telemetry.yaw += 0.1;
+            
+            // Random Jamming Spikes
+            if (Math.random() > 0.98) {
+                this.status.jamming = 10 + Math.random() * 40;
+                this.log("WARNING: LOCAL INTERFERENCE DETECTED");
+                this.playBeep(330, 0.05);
+            } else {
+                this.status.jamming = Math.max(10, this.status.jamming - 0.5);
+            }
 
             this.updateHUD();
         }, 50);

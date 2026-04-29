@@ -11,63 +11,63 @@
     <link rel="stylesheet" href="src/styles/style.css">
 </head>
 <body>
-    <!-- Visual Overlays -->
-    <div class="vignette"></div>
     <div class="scanlines"></div>
 
     <div class="dashboard">
         <!-- Header: Strategic HUD -->
-        <header class="panel header" id="header-main">
+        <header class="panel header">
             <div class="logo">
                 <span class="pulse">🦅</span> ARGUS <span>OMEGA</span>
             </div>
             
-            <div class="mission-status-hud">
+            <div class="mission-status-hud" style="display: flex; gap: 40px; font-family: var(--font-mono); font-size: 12px;">
                 <div class="hud-item">
-                    <div class="hud-label">MISSION CLOCK</div>
-                    <div class="hud-value" id="current-time">00:00:00</div>
+                    <div style="color: var(--accent-glow); margin-bottom: 4px;">MISSION CLOCK</div>
+                    <div id="current-time" style="color: var(--text-head); font-weight: 800;">00:00:00</div>
                 </div>
                 <div class="hud-item">
-                    <div class="hud-label">COORDINATES</div>
-                    <div class="hud-value" style="font-size: 12px;">39.92°N / 32.85°E</div>
+                    <div style="color: var(--accent-glow); margin-bottom: 4px;">TARGET SECTOR</div>
+                    <div style="color: var(--text-head); font-weight: 800;">39.9°N / 32.8°E</div>
                 </div>
             </div>
 
-            <div class="system-status">
-                <div class="status-item">
-                    <div class="status-indicator" id="gnss-status" style="background: var(--accent-glow); box-shadow: 0 0 10px var(--accent-glow);"></div>
-                    <span>SECURE LINK</span>
+            <div class="system-status" style="display: flex; gap: 20px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="pulse" style="width: 8px; height: 8px; background: var(--accent-glow); border-radius: 50%;"></div>
+                    <span style="font-size: 10px; color: var(--accent-glow);">SECURE LINK</span>
                 </div>
-                <div class="status-item">
-                    <div class="status-indicator" id="comm-status" style="background: var(--secondary-glow); box-shadow: 0 0 10px var(--secondary-glow);"></div>
-                    <span>AES-256 ACTIVE</span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="pulse" style="width: 8px; height: 8px; background: var(--secondary-glow); border-radius: 50%;"></div>
+                    <span style="font-size: 10px; color: var(--secondary-glow);">AES-256</span>
                 </div>
             </div>
         </header>
 
         <!-- Left: Primary Telemetry -->
         <aside class="panel telemetry-panel">
-            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 20px;">// CRITICAL TELEMETRY</h2>
+            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 20px; color: var(--accent-glow);">// CORE_TELEMETRY</h2>
+            
+            <!-- Artificial Horizon -->
+            <div class="gyro-container">
+                <div class="gyro-inner" id="gyro-inner">
+                    <div class="gyro-sky"></div>
+                    <div class="gyro-ground"></div>
+                    <div class="gyro-line"></div>
+                </div>
+            </div>
+
             <div class="data-grid">
                 <div class="data-card">
-                    <div class="data-label">ALTITUDE (MSL)</div>
-                    <div class="data-value"><span id="val-alt">450.0</span><small>M</small></div>
+                    <div class="data-label">Altitude (MSL)</div>
+                    <div class="data-value"><span id="val-alt">450.0</span><small style="font-size: 12px; margin-left: 5px;">M</small></div>
                 </div>
                 <div class="data-card">
-                    <div class="data-label">GROUND SPEED</div>
-                    <div class="data-value"><span id="val-vel">66.5</span><small>KM/H</small></div>
+                    <div class="data-label">Ground Speed</div>
+                    <div class="data-value"><span id="val-vel">66.5</span><small style="font-size: 12px; margin-left: 5px;">KM/H</small></div>
                 </div>
                 <div class="data-card">
-                    <div class="data-label">BATTERY CAPACITY</div>
-                    <div class="data-value"><span id="val-batt">88</span><small>%</small></div>
-                </div>
-                <div class="data-card">
-                    <div class="data-label">SIGNAL INTEGRITY</div>
-                    <div class="data-value"><span id="val-rssi">-62</span><small>DBM</small></div>
-                </div>
-                <div class="data-card" style="border-left-color: var(--secondary-glow);">
-                    <div class="data-label">PITCH / ROLL</div>
-                    <div class="hud-value" id="val-attitude" style="font-size: 18px; font-weight: 800;">0.0° / 0.0°</div>
+                    <div class="data-label">Battery Level</div>
+                    <div class="data-value"><span id="val-batt">88</span><small style="font-size: 12px; margin-left: 5px;">%</small></div>
                 </div>
             </div>
         </aside>
@@ -77,16 +77,19 @@
             <div class="radar-sweep"></div>
             
             <!-- Crosshair UI -->
-            <div class="crosshair-h" style="position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: rgba(0, 242, 255, 0.1);"></div>
-            <div class="crosshair-v" style="position: absolute; top: 0; left: 50%; width: 1px; height: 100%; background: rgba(0, 242, 255, 0.1);"></div>
+            <div style="position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: rgba(0, 242, 255, 0.1);"></div>
+            <div style="position: absolute; top: 0; left: 50%; width: 1px; height: 100%; background: rgba(0, 242, 255, 0.1);"></div>
             
-            <!-- Mock UAV Icon -->
-            <div id="uav-icon" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: all 0.2s ease;">
-                <svg width="60" height="60" viewBox="0 0 60 60">
-                    <path d="M30 10 L50 50 L30 42 L10 50 Z" fill="none" stroke="var(--accent-glow)" stroke-width="2"/>
-                    <circle cx="30" cy="30" r="4" fill="var(--accent-glow)"/>
+            <!-- UAV Icon -->
+            <div id="uav-icon" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                <svg width="40" height="40" viewBox="0 0 40 40">
+                    <path d="M20 5 L35 35 L20 28 L5 35 Z" fill="none" stroke="var(--accent-glow)" stroke-width="2"/>
+                    <circle cx="20" cy="22" r="3" fill="var(--accent-glow)"/>
                 </svg>
             </div>
+
+            <!-- Target simulation will be added via JS -->
+            <div id="targets-layer" style="position: absolute; inset: 0;"></div>
 
             <div style="position: absolute; top: 20px; left: 20px; font-family: var(--font-mono); font-size: 10px; color: var(--accent-glow);">
                 SCANNING SECTOR 07-ALPHA...
@@ -95,32 +98,30 @@
 
         <!-- Right: EW Shield & Logs -->
         <aside class="panel ew-panel">
-            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 20px;">// EW SPECTRUM ANALYZER</h2>
+            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 20px; color: var(--accent-glow);">// EW_SPECTRUM</h2>
             
-            <div class="ew-indicator">
-                <span style="font-size: 10px; width: 100px; color: var(--text-body);">JAMMING LVL</span>
-                <div class="bar-container" style="height: 4px; background: rgba(255,255,255,0.05); flex: 1;">
-                    <div class="bar-fill" id="bar-jamming" style="height: 100%; background: var(--danger-glow); width: 12%;"></div>
+            <canvas id="spectrum-canvas"></canvas>
+
+            <div style="margin-top: 30px;">
+                <div style="display: flex; justify-content: space-between; font-size: 10px; margin-bottom: 5px;">
+                    <span>SIGNAL INTEGRITY</span>
+                    <span id="val-rssi">-62 DBM</span>
                 </div>
-            </div>
-            
-            <div class="ew-indicator" style="margin-top: 15px;">
-                <span style="font-size: 10px; width: 100px; color: var(--text-body);">SPOOFING PROB</span>
-                <div class="bar-container" style="height: 4px; background: rgba(255,255,255,0.05); flex: 1;">
-                    <div class="bar-fill" id="bar-spoofing" style="height: 100%; background: var(--secondary-glow); width: 5%;"></div>
+                <div style="height: 4px; background: rgba(255,255,255,0.05);">
+                    <div id="bar-rssi" style="height: 100%; background: var(--accent-glow); width: 85%;"></div>
                 </div>
             </div>
 
-            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-top: 40px; margin-bottom: 10px;">// TACTICAL EVENT LOG</h2>
-            <div id="logs" style="font-size: 11px; font-family: var(--font-mono); color: var(--text-body); height: 200px; overflow-y: auto;">
-                <div>INITIATING ARGUS CORE...</div>
+            <h2 style="font-family: var(--font-mono); font-size: 12px; margin-top: 40px; margin-bottom: 10px; color: var(--accent-glow);">// TACTICAL_LOG</h2>
+            <div id="logs" style="font-size: 10px; font-family: var(--font-mono); color: var(--text-body); height: 180px; overflow-y: auto;">
+                <div>[INIT] LOADING CORE_OS...</div>
             </div>
         </aside>
 
         <!-- Bottom: Control Matrix -->
-        <footer class="panel control-panel" style="display: flex; gap: 20px; align-items: center;">
+        <footer class="panel control-panel">
             <button class="btn" id="btn-takeoff">Initiate Takeoff</button>
-            <button class="btn" id="btn-land">Autonomous Land</button>
+            <button class="btn" id="btn-land">Auto Land</button>
             <button class="btn" id="btn-rth">Return Home</button>
             <button class="btn btn-danger" id="btn-kill">Kill Protocol</button>
         </footer>
